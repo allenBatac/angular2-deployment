@@ -17,7 +17,7 @@ export class MessageService{
 		const body = JSON.stringify(message);
 		const headers = new Headers({'Content-Type' : 'application/json'});
         const token = localStorage.getItem('token') ? '?token='  + localStorage.getItem('token') : '';
-		return this.http.post('http://angular2-deployment-allen.herokuapp.com/message' + token, body, {headers: headers})
+		return this.http.post('https://angular2-deployment-allen.herokuapp.com/message' + token, body, {headers: headers})
 			.map((response: Response) =>  {
                 const result = response.json().obj;
                 const message = new Message(result.content, result.user.firstName, result._id, result.user._id);
@@ -31,7 +31,7 @@ export class MessageService{
 	}
 
 	getMessages(userId: String) {
-        return this.http.get('http://angular2-deployment-allen.herokuapp.com/message/' + userId)
+        return this.http.get('https://angular2-deployment-allen.herokuapp.com/message/' + userId)
             .map((response: Response) => {
                 console.log('RESPONSE ', response);
                 const messages = response.json().obj;
@@ -56,7 +56,7 @@ export class MessageService{
         const body = JSON.stringify(message);
         const headers = new Headers({'Content-Type': 'application/json'});
         const token = localStorage.getItem('token') ? '?token='  + localStorage.getItem('token') : '';
-        return this.http.patch('http://angular2-deployment-allen.herokuapp.com/message/' + message.messageId + token, body, {headers: headers})
+        return this.http.patch('https://angular2-deployment-allen.herokuapp.com/message/' + message.messageId + token, body, {headers: headers})
             .map((response: Response) => response.json())
             .catch((error:Response) => {
                 this.errorService.handleError(error.json());
@@ -66,7 +66,7 @@ export class MessageService{
 
 	deleteMessage(message: Message){
         const token = localStorage.getItem('token') ? '?token='  + localStorage.getItem('token') : '';
-        return this.http.delete('http://angular2-deployment-allen.herokuapp.com/message/' + message.messageId + token)
+        return this.http.delete('https://angular2-deployment-allen.herokuapp.com/message/' + message.messageId + token)
             .map((response: Response) => {
                 const result = response.json();
                 this.messages.splice(this.messages.indexOf(message), 1);;
